@@ -13,7 +13,7 @@
       <canvas id="temperature_chart" width="700" height="400"></canvas>
 <script>
 
-        var x = '0';
+        var x = 0;
         var temperature = 7;
 
         var ctx = $("#temperature_chart");
@@ -36,18 +36,18 @@
                     
                     }
                 ]
-            }
+            },
             
-            // options: {
-            //     responsive: false,
-            //     scales: {
-            //         xAxes: [{
-            //             ticks: {
-            //                 display: false
-            //             }
-            //         }]
-            //     }
-            // }
+            options: {
+                responsive: false,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false
+                        }
+                    }]
+                }
+            }
 
         });
 
@@ -71,7 +71,7 @@
             temperature_chart.update();
 
         
-        },1000);
+        },60000);
 
 
         </script>
