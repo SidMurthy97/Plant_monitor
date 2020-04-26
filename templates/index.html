@@ -3,19 +3,77 @@
       <title>{{ title }}</title>
       <!-- <link rel="stylesheet" href="../static/style.css/"> -->
       <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+      <script src = "https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
      
 
    </head>
    <body>
       <h1>Hello, World!</h1>
-        <script >
-            setInterval(function(){
-                // console.log("test");
-                var getData = $.get('/start');
-                getData.done(function(results){
-                    console.log(results.results);
-                });
-            },1000)
+      <div id = "test"> </div>
+      <canvas id="temperature_chart" width="700" height="400"></canvas>
+<script>
+
+        var x = '0';
+        var temperature = 7;
+
+        var ctx = $("#temperature_chart");
+        var temperature_chart = new Chart(ctx, {
+
+            type: 'line',
+            data: {
+                labels: [x],
+                datasets : [
+                    {
+                        label: 'temperature',
+                        data: [temperature],
+                        backgroundColor: [
+                            'rgba(102,255,153,1)',
+                        ],
+                        borderColor: [
+                            'rgba(255,0,0,1)',
+                        ],
+                        borderWidth: 1
+                    
+                    }
+                ]
+            }
+            
+            // options: {
+            //     responsive: false,
+            //     scales: {
+            //         xAxes: [{
+            //             ticks: {
+            //                 display: false
+            //             }
+            //         }]
+            //     }
+            // }
+
+        });
+
+
+
+        setInterval(function(){
+            var getData = $.get('/start');
+            
+            
+            getData.done(function(results){
+                temperature = results.results;
+                console.log(temperature);
+            });
+            
+            x = x+1;
+            temperature_chart.data.labels.push(x.toString());
+            temperature_chart.data.datasets.forEach((dataset) => {dataset.data.push(temperature);});
+            
+            
+
+            temperature_chart.update();
+
+        
+        },1000);
+
+
         </script>
    </body>
    
