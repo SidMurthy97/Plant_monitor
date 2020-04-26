@@ -1,9 +1,20 @@
+#include <dht.h>
+
+
+const int DHT_pin = A0;
+int dht_sig = 0;
+dht DHT;
+
+
 void setup() {
-  // put your setup code here, to run once:
+
   Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.print("test");
+  dht_sig = DHT.read11(DHT_pin);
+ 
+  Serial.println(DHT.temperature);
+  delay(2000);
 }
