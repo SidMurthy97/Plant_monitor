@@ -1,10 +1,22 @@
 <!DOCTYPE html>
    <head>
       <title>{{ title }}</title>
-      <link rel="stylesheet" href="../static/style.css/">
+      <!-- <link rel="stylesheet" href="../static/style.css/"> -->
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+     
+
    </head>
    <body>
       <h1>Hello, World!</h1>
-      <h2>The date and time on the server is: {{ time }}</h2>
+        <script >
+            setInterval(function(){
+                // console.log("test");
+                var getData = $.get('/start');
+                getData.done(function(results){
+                    console.log(results.results);
+                });
+            },1000)
+        </script>
    </body>
+   
 </html>

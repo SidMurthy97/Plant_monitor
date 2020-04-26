@@ -2,7 +2,7 @@ from flask import Flask, jsonify,render_template,request
 import webbrowser
 import time
 import random
-from data_acquisition import Get_data 
+from get_data import Get_data 
 import serial 
 
 
@@ -11,8 +11,12 @@ app = Flask(__name__)
 
 @app.route("/start", methods = ['GET'])
 def begin():
-    ser = serial.Serial("com18",9600)
-    Get_data(ser)
+    ser = serial.Serial("COM18",9600)
+    temperature_reading = Get_data(ser).decode('utf-8')
+
+
+    # return jsonify(results =random.randint(1,10))
+    return jsonify(results =temperature_reading)
 
 
 
