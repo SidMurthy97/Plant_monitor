@@ -49,19 +49,16 @@
 
         setInterval(function(){
             var getData = $.get('/start');
-            
+            x = x+1;
             
             getData.done(function(results){
                 temperature = results.results;
                 console.log(temperature);
+
+                temperature_chart.data.labels.push(x.toString());
+                temperature_chart.data.datasets.forEach((dataset) => {dataset.data.push(temperature);});
             });
             
-            x = x+1;
-            temperature_chart.data.labels.push(x.toString());
-            temperature_chart.data.datasets.forEach((dataset) => {dataset.data.push(temperature);});
-            
-            
-
             temperature_chart.update();
 
         

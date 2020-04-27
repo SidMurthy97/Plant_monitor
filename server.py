@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/start", methods = ['GET'])
 def begin():
-    ser = serial.Serial("COM18",9600)
+    ser = serial.Serial("COM3",9600)
     temperature_reading = Get_data(ser).decode('utf-8')
 
 

@@ -16,5 +16,5 @@ void loop() {
   dht_sig = DHT.read11(DHT_pin);
  
   Serial.println(DHT.temperature);
-  delay(2000);
+  delay(1000);
 }
