@@ -10,11 +10,12 @@
    <body>
       <h1>Hello, World!</h1>
       <div id = "test"> </div>
-      <canvas id="temperature_chart" width="700" height="400"></canvas>
+      <canvas id="temperature_chart" width="1500" height="600"></canvas>
 <script>
 
         var x = 0;
         var temperature = 0;
+        var humidity = 0;
 
         var ctx = $("#temperature_chart");
         var temperature_chart = new Chart(ctx, {
@@ -26,14 +27,21 @@
                     {
                         label: 'temperature',
                         data: [temperature],
-                        backgroundColor: [
-                            'rgba(102,255,153,1)',
-                        ],
                         borderColor: [
-                            'rgba(255,0,0,1)',
+                            '#060666',
                         ],
-                        borderWidth: 1
+                        borderWidth: 3,
+                        fill: false
+                    },
                     
+
+                    {
+                        label: 'Humidity',
+                        data: [humidity],
+                        borderColor: [
+                            '#7fced4'
+                        ],
+                        fill: false
                     }
                 ]
             },
@@ -52,17 +60,19 @@
             x = x+1;
             
             getData.done(function(results){
-                temperature = results.results;
-                console.log(temperature);
+                temperature = results.results[0];
+                humidity = results.results[1];
+                //console.log(temperature);
 
                 temperature_chart.data.labels.push(x.toString());
-                temperature_chart.data.datasets.forEach((dataset) => {dataset.data.push(temperature);});
+                temperature_chart.data.datasets[0].data.push(temperature);
+                temperature_chart.data.datasets[1].data.push(humidity);
             });
             
             temperature_chart.update();
 
         
-        },1000);
+        },1500);
 
 
         </script>

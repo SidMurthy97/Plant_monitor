@@ -2,7 +2,7 @@ import serial
 
 def Get_data(ser):
     
-    while(not ser.in_waiting):
-        continue
-    return ser.read(7)
+    temp = ser.read(5).decode('utf-8')
+    humidity = ser.read(5).decode('utf-8')
     
+    return temp,humidity

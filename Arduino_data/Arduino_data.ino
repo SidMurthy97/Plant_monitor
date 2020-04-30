@@ -15,6 +15,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   dht_sig = DHT.read11(DHT_pin);
  
-  Serial.println(DHT.temperature);
-  delay(1000);
+  Serial.print(DHT.temperature);
+  Serial.print(DHT.humidity);
+  delay(1500);
 }
