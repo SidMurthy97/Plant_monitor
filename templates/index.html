@@ -2,80 +2,15 @@
    <head>
       <title>{{ title }}</title>
       <!-- <link rel="stylesheet" href="../static/style.css/"> -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
       <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
       <script src = "https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-     
-
+    
    </head>
    <body>
       <h1>Hello, World!</h1>
-      <div id = "test"> </div>
       <canvas id="temperature_chart" width="1500" height="600"></canvas>
-<script>
-
-        var x = 0;
-        var temperature = 0;
-        var humidity = 0;
-
-        var ctx = $("#temperature_chart");
-        var temperature_chart = new Chart(ctx, {
-
-            type: 'line',
-            data: {
-                labels: [x],
-                datasets : [
-                    {
-                        label: 'temperature',
-                        data: [temperature],
-                        borderColor: [
-                            '#060666',
-                        ],
-                        borderWidth: 3,
-                        fill: false
-                    },
-                    
-
-                    {
-                        label: 'Humidity',
-                        data: [humidity],
-                        borderColor: [
-                            '#7fced4'
-                        ],
-                        fill: false
-                    }
-                ]
-            },
-            
-            options: {
-                responsive: false,
-
-            }
-
-        });
-
-
-
-        setInterval(function(){
-            var getData = $.get('/start');
-            x = x+1;
-            
-            getData.done(function(results){
-                temperature = results.results[0];
-                humidity = results.results[1];
-                //console.log(temperature);
-
-                temperature_chart.data.labels.push(x.toString());
-                temperature_chart.data.datasets[0].data.push(temperature);
-                temperature_chart.data.datasets[1].data.push(humidity);
-            });
-            
-            temperature_chart.update();
-
-        
-        },1500);
-
-
-        </script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
    </body>
    
 </html>
