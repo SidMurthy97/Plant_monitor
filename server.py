@@ -11,10 +11,12 @@ app = Flask(__name__)
 @app.route("/start", methods = ['GET'])
 def begin():
     ser = serial.Serial("COM3",9600)
-    temperature_reading,humidity_reading = Get_data(ser)
+    temperature = ser.read(5).decode('utf-8')
+    humidity = ser.read(5).decode('utf-8')
+    soil_moisture = ser.read(2).decode('utf-8')
     
     #return jsonify(results =[random.randint(1,10),random.randint(1,10)])
-    return jsonify(results = [temperature_reading,humidity_reading])
+    return jsonify(results = [temperature,humidity,soil_moisture])
 
 @app.route("/")
 def index():
