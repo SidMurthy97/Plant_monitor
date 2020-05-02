@@ -3,6 +3,7 @@ var temperature = 0;
 var humidity = 0;
 
 var ctx = $("#temperature_chart");
+console.log("test");
 var temperature_chart = new Chart(ctx, {
 
     type: 'line',
