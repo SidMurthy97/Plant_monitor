@@ -59,9 +59,9 @@ updated_data.done(function(results){
     humidity = results.results[1];
     soil_moisture = results.results[2];
     x = results.results[3];
-    console.log(temperature);
-    console.log(humidity);
-    console.log(soil_moisture);
+    // console.log(temperature);
+    // console.log(humidity);
+    // console.log(soil_moisture);
     temperature_chart.data.datasets[0].data = temperature;
     temperature_chart.data.datasets[1].data = humidity;
     temperature_chart.data.datasets[2].data = soil_moisture;
@@ -77,16 +77,19 @@ updated_data.done(function(results){
 document.getElementById("start_button").addEventListener("click",function(){
     setInterval(function(){
         var getData = $.get('/start');
-        x = x+1;
-        
+        console.log(x)
+        x = parseInt(x[x.length -1]);
+        console.log(x)
+        x =  (x+1).toString();
+        console.log(x)
         getData.done(function(results){
             temperature = results.results[0];
             humidity = results.results[1];
             soil_moisture = results.results[2];
-            console.log(temperature);
-            console.log(humidity);
-            console.log(soil_moisture);
-            temperature_chart.data.labels.push(x.toString());
+            // console.log(temperature);
+            // console.log(humidity);
+            // console.log(soil_moisture);
+            temperature_chart.data.labels.push(x);
             temperature_chart.data.datasets[0].data.push(temperature);
             temperature_chart.data.datasets[1].data.push(humidity);
             temperature_chart.data.datasets[2].data.push(soil_moisture);
