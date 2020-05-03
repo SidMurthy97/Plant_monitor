@@ -71,7 +71,7 @@ document.getElementById("start_button").addEventListener("click",function(){
         temperature_chart.update();
 
 
-    },1000); //90000
+    },2000); //90000
 });
 
 
@@ -94,7 +94,5 @@ document.getElementById("update_button").addEventListener("click",function(){
         temperature_chart.update();
 
     });
-    
-
 
 });

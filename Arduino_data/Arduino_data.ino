@@ -4,7 +4,7 @@
 const int DHT_pin = A0;
 const int soil_moisture_pin = A1;
 const int soil_moisture_trigger = 8;
-int soil_moisture = 0;
+int soil_moisture = 68;
 
 int dht_sig = 0;
 int soil_moisture_sig = 0;
@@ -21,14 +21,14 @@ void loop() {
   // put your main code here, to run repeatedly:
   dht_sig = DHT.read11(DHT_pin);
   
-  digitalWrite(soil_moisture_trigger,HIGH);
-  delay(10);
-  soil_moisture_sig = analogRead(soil_moisture_pin);
-  digitalWrite(soil_moisture_trigger,LOW);
-  soil_moisture = map(soil_moisture_sig,168,0,0,100);
+//  digitalWrite(soil_moisture_trigger,HIGH);
+//  delay(10);
+//  soil_moisture_sig = analogRead(soil_moisture_pin);
+//  digitalWrite(soil_moisture_trigger,LOW);
+//  soil_moisture = map(soil_moisture_sig,168,0,0,100);
   
   Serial.print(DHT.temperature);
   Serial.print(DHT.humidity);
   Serial.print(soil_moisture);
-  delay(900000);
+  delay(2000);
 }
