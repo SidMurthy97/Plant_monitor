@@ -9,11 +9,11 @@ var temperature_chart = new Chart(ctx, {
 
     type: 'line',
     data: {
-        labels: [x],
+        labels: [],
         datasets : [
             {
                 label: 'temperature',
-                data: [temperature],
+                data: [],
                 borderColor: [
                     '#060666',
                 ],
@@ -24,7 +24,7 @@ var temperature_chart = new Chart(ctx, {
 
             {
                 label: 'Humidity',
-                data: [humidity],
+                data: [],
                 borderColor: [
                     '#d6c73e'
                 ],
@@ -33,7 +33,7 @@ var temperature_chart = new Chart(ctx, {
 
             {
                 label: 'Soil Moisture',
-                data: [soil_moisture],
+                data: [],
                 borderColor: [
                     '#7fced4'
                 ],
@@ -72,4 +72,29 @@ document.getElementById("start_button").addEventListener("click",function(){
 
 
     },1000); //90000
+});
+
+
+
+document.getElementById("update_button").addEventListener("click",function(){
+
+    var updated_data  = $.get('/update');
+
+    updated_data.done(function(results){
+        temperature = results.results[0];
+        humidity = results.results[1];
+        soil_moisture = results.results[2];
+        console.log(temperature);
+        console.log(humidity);
+        console.log(soil_moisture);
+        temperature_chart.data.datasets[0].data = temperature;
+        temperature_chart.data.datasets[1].data = humidity;
+        temperature_chart.data.datasets[2].data = soil_moisture;
+
+        temperature_chart.update();
+
+    });
+    
+
+
 });

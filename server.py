@@ -2,21 +2,31 @@ from flask import Flask, jsonify,render_template,request
 import webbrowser
 import time
 import random
-from get_data import Get_data 
+import threading 
 import serial 
 
 
 app = Flask(__name__)
+#ser = serial.Serial("COM3",9600)
 
-@app.route("/update", methods = 'GET'])
+
+
+#def data_collection():
+
+
+
+
+@app.route("/update", methods = ['GET'])
 def update_chart():
+    test_data = [1,2,3,4,5]
+    return jsonify(results = [test_data,test_data,test_data])
     #get all data from thread 
     #send to client 
 
 
 @app.route("/start", methods = ['GET'])
 def begin():
-    # ser = serial.Serial("COM3",9600)
+
     # temperature = ser.read(5).decode('utf-8')
     # humidity = ser.read(5).decode('utf-8')
     # soil_moisture = ser.read(2).decode('utf-8')
