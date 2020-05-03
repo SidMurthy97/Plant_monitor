@@ -6,12 +6,10 @@ import threading, queue
 import serial 
 import sys
 
-ser = serial.Serial("COM3",9600)
+ser = serial.Serial("/dev/ttyACM0",9600)
 app = Flask(__name__)
 q = queue.Queue()
 q2 = queue.Queue()
-lock = threading.Lock()
-
 
 def data_collection():
 
@@ -20,38 +18,33 @@ def data_collection():
     soil_moisture_readings = []
     time_ax = []
     i = 0
-    try: 
-        while(1):
-            time_ax.append(str(i))
-            temp_readings.append(ser.read(5).decode('utf-8'))
-            humidity_readings.append(ser.read(5).decode('utf-8'))
-            soil_moisture_readings.append(ser.read(2).decode('utf-8'))
-            i = i + 1
-            print(temp_readings[-1])
-            #if live stream required, send data 
-            if not q.empty():
-                command = q.get()
-                if command == 'get data':
-                    print("sending live data")
-                    
-                    q.put(temp_readings[-1])
-                    q.put(humidity_readings[-1])
-                    q.put(soil_moisture_readings[-1])
-                    q2.put(1)
-                
-                elif command == 'get all data':
-
-                    q.put(temp_readings)
-                    q.put(humidity_readings)
-                    q.put(soil_moisture_readings)
-                    q.put(time_ax)
-                    q2.put(1)
-                    
-                
-    except KeyboardInterrupt:
-        sys.exit()
+    
+    while(1):
+        time_ax.append(str(i))
+        temp_readings.append(ser.read(5).decode('utf-8'))
+        humidity_readings.append(ser.read(5).decode('utf-8'))
+        soil_moisture_readings.append(ser.read(2).decode('utf-8'))
+        i = i + 1
         
-        print("interrupted")
+        #if live stream required, send data 
+        if not q.empty():
+            command = q.get()
+            if command == 'get data':
+
+                q.put(temp_readings[-1])
+                q.put(humidity_readings[-1])
+                q.put(soil_moisture_readings[-1])
+                q2.put(1)
+            
+            elif command == 'get all data':
+              
+                q.put(temp_readings)
+                q.put(humidity_readings)
+                q.put(soil_moisture_readings)
+                q.put(time_ax)
+                q2.put(1)
+                
+
 
 
 @app.route("/update", methods = ['GET'])
@@ -71,7 +64,6 @@ def update_chart():
 
 @app.route("/start", methods = ['GET'])
 def begin():
-    print("seinding request for data")
     q.put('get data')
     
     while not q2.get():
@@ -93,4 +85,4 @@ def index():
 if __name__ == '__main__':
     x = threading.Thread(target=data_collection)
     x.start()
-    app.run()
+    app.run(host = '0.0.0.0', port = 5000)

@@ -50,8 +50,6 @@ var temperature_chart = new Chart(ctx, {
 });
 
 
-// document.getElementById("update_button").addEventListener("click",function(){
-
 var updated_data  = $.get('/update');
 
 updated_data.done(function(results){
@@ -71,33 +69,28 @@ updated_data.done(function(results){
 
     });
 
-// });
+setInterval(function(){
+    var getData = $.get('/start');
+    console.log(x)
+    x = parseInt(x[x.length -1]);
+    console.log(x)
+    x =  (x+30).toString();
+    console.log(x)
+    getData.done(function(results){
+        temperature = results.results[0];
+        humidity = results.results[1];
+        soil_moisture = results.results[2];
+        // console.log(temperature);
+        // console.log(humidity);
+        // console.log(soil_moisture);
+        temperature_chart.data.labels.push(x);
+        temperature_chart.data.datasets[0].data.push(temperature);
+        temperature_chart.data.datasets[1].data.push(humidity);
+        temperature_chart.data.datasets[2].data.push(soil_moisture);
+    });
+    
+    temperature_chart.update();
 
+},180000); //90000
 
-document.getElementById("start_button").addEventListener("click",function(){
-    setInterval(function(){
-        var getData = $.get('/start');
-        console.log(x)
-        x = parseInt(x[x.length -1]);
-        console.log(x)
-        x =  (x+1).toString();
-        console.log(x)
-        getData.done(function(results){
-            temperature = results.results[0];
-            humidity = results.results[1];
-            soil_moisture = results.results[2];
-            // console.log(temperature);
-            // console.log(humidity);
-            // console.log(soil_moisture);
-            temperature_chart.data.labels.push(x);
-            temperature_chart.data.datasets[0].data.push(temperature);
-            temperature_chart.data.datasets[1].data.push(humidity);
-            temperature_chart.data.datasets[2].data.push(soil_moisture);
-        });
-        
-        temperature_chart.update();
-
-
-    },2000); //90000
-});
 
