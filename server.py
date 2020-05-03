@@ -4,11 +4,13 @@ import time
 import random
 import threading, queue
 import serial 
+import sys
 
 ser = serial.Serial("COM3",9600)
 app = Flask(__name__)
 q = queue.Queue()
-
+q2 = queue.Queue()
+lock = threading.Lock()
 
 
 def data_collection():
@@ -27,11 +29,16 @@ def data_collection():
                 print("checking queue")
                 if q.get(block=False) == 'get data':
                     print("sending live data")
+                    
                     q.put(temp_readings[-1])
                     q.put(humidity_readings[-1])
                     q.put(soil_moisture_readings[-1])
+                    q2.put(1)
+                    
                 
     except KeyboardInterrupt:
+        sys.exit()
+        
         print("interrupted")
 
 
@@ -44,20 +51,16 @@ def update_chart():
 def begin():
     print("seinding request for data")
     q.put('get data')
-
+    
+    while not q2.get():
+        continue
     temperature = q.get()
     humidity = q.get()
     soil_moisture = q.get()
-   
-    return jsonify(results =[random.randint(1,10),random.randint(1,10), random.randint(1,10)])
-   
-   
-   
-    # temperature = ser.read(5).decode('utf-8')
-    # humidity = ser.read(5).decode('utf-8')
-    # soil_moisture = ser.read(2).decode('utf-8')
+    
 
-    #return jsonify(results = [temperature,humidity,soil_moisture])
+    return jsonify(results = [temperature,humidity,soil_moisture])
+    #return jsonify(results =[random.randint(1,10),random.randint(1,10), random.randint(1,10)])
 
 @app.route("/")
 def index():

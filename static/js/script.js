@@ -71,7 +71,7 @@ document.getElementById("start_button").addEventListener("click",function(){
         temperature_chart.update();
 
 
-    },2000); //90000
+    },10000); //90000
 });
 
 
