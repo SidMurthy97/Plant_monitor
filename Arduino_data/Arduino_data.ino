@@ -30,5 +30,5 @@ void loop() {
   Serial.print(DHT.temperature);
   Serial.print(DHT.humidity);
   Serial.print(soil_moisture);
-  delay(1990);
+  delay(900000);
 }

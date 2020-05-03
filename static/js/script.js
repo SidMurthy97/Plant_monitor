@@ -50,24 +50,26 @@ var temperature_chart = new Chart(ctx, {
 });
 
 
+document.getElementById("start_button").addEventListener("click",function(){
+    setInterval(function(){
+        var getData = $.get('/start');
+        x = x+1;
+        
+        getData.done(function(results){
+            temperature = results.results[0];
+            humidity = results.results[1];
+            soil_moisture = results.results[2];
+            console.log(temperature);
+            console.log(humidity);
+            console.log(soil_moisture);
+            temperature_chart.data.labels.push(x.toString());
+            temperature_chart.data.datasets[0].data.push(temperature);
+            temperature_chart.data.datasets[1].data.push(humidity);
+            temperature_chart.data.datasets[2].data.push(soil_moisture);
+        });
+        
+        temperature_chart.update();
 
-setInterval(function(){
-    var getData = $.get('/start');
-    x = x+1;
-    
-    getData.done(function(results){
-        temperature = results.results[0];
-        humidity = results.results[1];
-        soil_moisture = results.results[2];
-        //console.log(temperature);
 
-        temperature_chart.data.labels.push(x.toString());
-        temperature_chart.data.datasets[0].data.push(temperature);
-        temperature_chart.data.datasets[1].data.push(humidity);
-        temperature_chart.data.datasets[2].data.push(soil_moisture);
-    });
-    
-    temperature_chart.update();
-
-
-},2000);
+    },1000); //90000
+});
