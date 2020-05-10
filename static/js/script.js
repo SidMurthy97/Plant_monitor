@@ -3,6 +3,7 @@ var temperature = 0;
 var humidity = 0;
 var soil_moisture = 0;
 
+console.log("welcome");
 var ctx = $("#temperature_chart");
 console.log("test");
 var temperature_chart = new Chart(ctx, {
@@ -13,7 +14,7 @@ var temperature_chart = new Chart(ctx, {
         datasets : [
             {
                 label: 'temperature',
-                data: [],
+                data: [temperature],
                 borderColor: [
                     '#060666',
                 ],
@@ -24,7 +25,7 @@ var temperature_chart = new Chart(ctx, {
 
             {
                 label: 'Humidity',
-                data: [],
+                data: [humidity],
                 borderColor: [
                     '#d6c73e'
                 ],
@@ -33,7 +34,7 @@ var temperature_chart = new Chart(ctx, {
 
             {
                 label: 'Soil Moisture',
-                data: [],
+                data: [soil_moisture],
                 borderColor: [
                     '#7fced4'
                 ],
@@ -44,6 +45,44 @@ var temperature_chart = new Chart(ctx, {
     
     options: {
         responsive: false,
+        scales:{
+            
+            xAxes: [ {
+                //type: 'time',
+                display: true,
+                scaleLabel : {
+                    display: true,
+                    labelString: 'Time (s)'
+                    
+                    },
+                ticks: {
+                   autoSkip: true,
+                   maxTicksLimit: 5
+                }
+                }],
+            yAxes: [ {
+                display: true,
+                position: 'left',
+                scaleLabel : {
+                    display: true,
+
+                    labelString: 'Temperature (C)'
+                    
+                    }
+                },
+                {
+                display: true,
+                position: 'right',
+                scaleLabel : {
+                    display: true,
+
+                    labelString: 'Percentage Humidity'
+                    
+                    }                   
+                    
+                    
+                    }]
+            }
 
     }
 
@@ -57,9 +96,11 @@ updated_data.done(function(results){
     humidity = results.results[1];
     soil_moisture = results.results[2];
     x = results.results[3];
-    // console.log(temperature);
-    // console.log(humidity);
-    // console.log(soil_moisture);
+    
+    console.log(temperature);
+    console.log(humidity);
+    console.log(soil_moisture);
+    
     temperature_chart.data.datasets[0].data = temperature;
     temperature_chart.data.datasets[1].data = humidity;
     temperature_chart.data.datasets[2].data = soil_moisture;
@@ -69,12 +110,13 @@ updated_data.done(function(results){
 
     });
 
+/*
 setInterval(function(){
     var getData = $.get('/start');
     console.log(x)
     x = parseInt(x[x.length -1]);
     console.log(x)
-    x =  (x+30).toString();
+    x =  (x+10).toString();
     console.log(x)
     getData.done(function(results){
         temperature = results.results[0];
@@ -91,6 +133,6 @@ setInterval(function(){
     
     temperature_chart.update();
 
-},180000); //90000
-
+},600000); //90000
+*/
 

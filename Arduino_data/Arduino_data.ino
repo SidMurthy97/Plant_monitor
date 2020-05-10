@@ -1,10 +1,13 @@
 #include <dht.h>
 
-
 const int DHT_pin = A0;
 const int soil_moisture_pin = A1;
 const int soil_moisture_trigger = 8;
-int soil_moisture = 68;
+int soil_moisture = 0;
+
+unsigned long ms_per_s = 1000L;
+unsigned long minutes = 30;
+unsigned long sampling_time = minutes * ms_per_s * 60;
 
 int dht_sig = 0;
 int soil_moisture_sig = 0;
@@ -30,5 +33,5 @@ void loop() {
   Serial.print(DHT.temperature);
   Serial.print(DHT.humidity);
   Serial.print(soil_moisture);
-  delay(2000);
+  delay(3000);
 }
