@@ -19,7 +19,8 @@ var temperature_chart = new Chart(ctx, {
                     '#060666',
                 ],
                 borderWidth: 3,
-                fill: false
+                fill: false,
+                yAxisID: "temperature"
             },
             
 
@@ -29,7 +30,8 @@ var temperature_chart = new Chart(ctx, {
                 borderColor: [
                     '#d6c73e'
                 ],
-                fill: false
+                fill: false,
+                yAxisID: "humidity"
             }, 
 
             {
@@ -38,7 +40,8 @@ var temperature_chart = new Chart(ctx, {
                 borderColor: [
                     '#7fced4'
                 ],
-                fill: false
+                fill: false,
+                yAxisID: "humidity"
             }
         ]
     },
@@ -57,12 +60,17 @@ var temperature_chart = new Chart(ctx, {
                     },
                 ticks: {
                    autoSkip: true,
-                   maxTicksLimit: 5
+                   maxTicksLimit: 12
                 }
                 }],
             yAxes: [ {
+                id: "temperature",
                 display: true,
                 position: 'left',
+                ticks: {
+                    suggestedMin: 15,
+                    suggestedMax: 30
+                    },
                 scaleLabel : {
                     display: true,
 
@@ -71,8 +79,13 @@ var temperature_chart = new Chart(ctx, {
                     }
                 },
                 {
+                id: "humidity",
                 display: true,
                 position: 'right',
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 100
+                    },
                 scaleLabel : {
                     display: true,
 
