@@ -1,7 +1,7 @@
 ## Plant monitor
 
 A project build to monitor my plant remotely. It is a data collection tool which records the soil moisture along with the ambient humidty and temperature 
-and pushes it to a FLask server. Here, it is plotted using chartjs
+and pushes it to a FLask server. Here, it is plotted using chartjs. See build process here https://www.hackster.io/murthysiddhant/plant-monitor-sensor-to-front-end-c1f715
 
 # Components
 1. Arduino nano 
